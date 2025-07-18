@@ -27,99 +27,9 @@ const AIWorkflows: React.FC = () => {
     transition: { duration: 0.6 }
   };
 
-  const workflows = [
-    {
-      id: 1,
-      name: 'Customer Support Bot',
-      description: 'Automated customer service responses and ticket routing',
-      status: 'active',
-      type: 'chatbot',
-      lastRun: '2024-02-20T10:30:00',
-      executions: 1247,
-      successRate: 94.5,
-      avgResponseTime: '1.2s',
-      triggers: ['Website Chat', 'Email', 'Slack'],
-      actions: ['Respond to Query', 'Create Ticket', 'Escalate to Human']
-    },
-    {
-      id: 2,
-      name: 'Lead Qualification',
-      description: 'Automatically qualify and score incoming leads',
-      status: 'active',
-      type: 'automation',
-      lastRun: '2024-02-20T14:15:00',
-      executions: 523,
-      successRate: 98.2,
-      avgResponseTime: '0.8s',
-      triggers: ['Form Submission', 'Email Signup', 'Demo Request'],
-      actions: ['Score Lead', 'Send to CRM', 'Notify Sales Team']
-    },
-    {
-      id: 3,
-      name: 'Content Generator',
-      description: 'AI-powered content creation for social media and blogs',
-      status: 'paused',
-      type: 'content',
-      lastRun: '2024-02-19T09:00:00',
-      executions: 234,
-      successRate: 87.3,
-      avgResponseTime: '15.2s',
-      triggers: ['Schedule', 'Content Request', 'Trend Alert'],
-      actions: ['Generate Content', 'Review & Approve', 'Publish']
-    },
-    {
-      id: 4,
-      name: 'Email Automation',
-      description: 'Personalized email sequences based on user behavior',
-      status: 'active',
-      type: 'email',
-      lastRun: '2024-02-20T16:45:00',
-      executions: 892,
-      successRate: 91.7,
-      avgResponseTime: '2.1s',
-      triggers: ['User Action', 'Time-based', 'Behavioral'],
-      actions: ['Send Email', 'Update Tags', 'Track Engagement']
-    }
-  ];
-
-  const workflowTemplates = [
-    {
-      id: 1,
-      name: 'Customer Onboarding',
-      description: 'Automated welcome sequence for new customers',
-      icon: MessageSquare,
-      category: 'Customer Success',
-      complexity: 'Medium',
-      estimatedTime: '30 min'
-    },
-    {
-      id: 2,
-      name: 'Data Sync Automation',
-      description: 'Sync data between multiple platforms automatically',
-      icon: Database,
-      category: 'Integration',
-      complexity: 'High',
-      estimatedTime: '45 min'
-    },
-    {
-      id: 3,
-      name: 'Social Media Scheduler',
-      description: 'Automated posting across social media platforms',
-      icon: Globe,
-      category: 'Marketing',
-      complexity: 'Low',
-      estimatedTime: '15 min'
-    },
-    {
-      id: 4,
-      name: 'Invoice Processing',
-      description: 'Automated invoice generation and payment tracking',
-      icon: BarChart3,
-      category: 'Finance',
-      complexity: 'Medium',
-      estimatedTime: '25 min'
-    }
-  ];
+  // No demo workflows or templates
+  const workflows: any[] = [];
+  const workflowTemplates: any[] = [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -170,16 +80,8 @@ const AIWorkflows: React.FC = () => {
     >
       {/* Header */}
       <motion.div variants={fadeIn}>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">AI Workflows</h1>
-            <p className="text-gray-600 mt-1">Automate your business processes with AI</p>
-          </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
-            <Plus className="h-5 w-5" />
-            <span>Create Workflow</span>
-          </button>
-        </div>
+        <h1 className="text-3xl font-bold text-gray-900">AI Workflows</h1>
+        <p className="text-gray-600 mt-1">Automate your business processes with AI-powered workflows</p>
       </motion.div>
 
       {/* Tabs */}
@@ -207,121 +109,35 @@ const AIWorkflows: React.FC = () => {
 
         <div className="p-6">
           {activeTab === 'workflows' && (
-            <div className="space-y-6">
-              {workflows.map((workflow) => {
-                const StatusIcon = getStatusIcon(workflow.status);
-                const TypeIcon = getTypeIcon(workflow.type);
-                
-                return (
-                  <div key={workflow.id} className="border border-gray-200 rounded-lg p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-start space-x-4">
-                        <div className="bg-gradient-to-r from-blue-500 to-emerald-500 p-3 rounded-lg">
-                          <TypeIcon className="h-6 w-6 text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-3 mb-2">
-                            <h3 className="text-lg font-semibold text-gray-900">{workflow.name}</h3>
-                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(workflow.status)}`}>
-                              <StatusIcon className="h-3 w-3 mr-1" />
-                              {workflow.status.charAt(0).toUpperCase() + workflow.status.slice(1)}
-                            </span>
-                          </div>
-                          <p className="text-gray-600 mb-3">{workflow.description}</p>
-                          <div className="flex items-center space-x-4 text-sm text-gray-500">
-                            <span>Last run: {new Date(workflow.lastRun).toLocaleString()}</span>
-                            <span>•</span>
-                            <span>{workflow.executions} executions</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2">
-                        <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
-                          {workflow.status === 'active' ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-                        </button>
-                        <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
-                          <Settings className="h-5 w-5" />
-                        </button>
-                      </div>
-                    </div>
-                    
-                    {/* Performance Metrics */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                      <div className="bg-emerald-50 rounded-lg p-3">
-                        <div className="text-sm text-emerald-600">Success Rate</div>
-                        <div className="text-lg font-semibold text-emerald-900">{workflow.successRate}%</div>
-                      </div>
-                      <div className="bg-blue-50 rounded-lg p-3">
-                        <div className="text-sm text-blue-600">Avg Response Time</div>
-                        <div className="text-lg font-semibold text-blue-900">{workflow.avgResponseTime}</div>
-                      </div>
-                      <div className="bg-purple-50 rounded-lg p-3">
-                        <div className="text-sm text-purple-600">Total Executions</div>
-                        <div className="text-lg font-semibold text-purple-900">{workflow.executions}</div>
-                      </div>
-                    </div>
-                    
-                    {/* Triggers and Actions */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h4 className="font-medium text-gray-900 mb-2">Triggers</h4>
-                        <div className="space-y-1">
-                          {workflow.triggers.map((trigger, index) => (
-                            <span key={index} className="inline-block bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm mr-2">
-                              {trigger}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-gray-900 mb-2">Actions</h4>
-                        <div className="space-y-1">
-                          {workflow.actions.map((action, index) => (
-                            <span key={index} className="inline-block bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-sm mr-2">
-                              {action}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <motion.div 
+              variants={fadeIn}
+              className="bg-white rounded-xl p-6 custom-shadow"
+            >
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Your Workflows</h2>
+              <div className="space-y-4">
+                <div className="text-center py-12">
+                  <Bot className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No workflows found</h3>
+                  <p className="text-gray-600">You have not created any AI workflows yet.</p>
+                </div>
+              </div>
+            </motion.div>
           )}
 
           {activeTab === 'templates' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {workflowTemplates.map((template) => (
-                <div key={template.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-gradient-to-r from-blue-500 to-emerald-500 p-3 rounded-lg">
-                      <template.icon className="h-6 w-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-lg font-semibold text-gray-900">{template.name}</h3>
-                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
-                          {template.category}
-                        </span>
-                      </div>
-                      <p className="text-gray-600 mb-4">{template.description}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <span>Complexity: {template.complexity}</span>
-                          <span>•</span>
-                          <span>Setup: {template.estimatedTime}</span>
-                        </div>
-                        <button className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors">
-                          Use Template
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+            <motion.div 
+              variants={fadeIn}
+              className="bg-white rounded-xl p-6 custom-shadow"
+            >
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Workflow Templates</h2>
+              <div className="space-y-4">
+                <div className="text-center py-12">
+                  <Bot className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No templates found</h3>
+                  <p className="text-gray-600">No workflow templates are available yet.</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            </motion.div>
           )}
 
           {activeTab === 'analytics' && (

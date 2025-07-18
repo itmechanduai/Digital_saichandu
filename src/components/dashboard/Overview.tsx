@@ -22,68 +22,9 @@ const Overview: React.FC = () => {
     transition: { duration: 0.6 }
   };
 
-  const stats = [
-    {
-      title: 'Total Orders',
-      value: '12',
-      change: '+2 this month',
-      changeType: 'positive',
-      icon: Package,
-      color: 'blue'
-    },
-    {
-      title: 'Total Spent',
-      value: '$15,420',
-      change: '+$2,400 this month',
-      changeType: 'positive',
-      icon: DollarSign,
-      color: 'emerald'
-    },
-    {
-      title: 'Active Services',
-      value: '5',
-      change: '2 in progress',
-      changeType: 'neutral',
-      icon: Clock,
-      color: 'orange'
-    },
-    {
-      title: 'Completed',
-      value: '7',
-      change: '100% success rate',
-      changeType: 'positive',
-      icon: CheckCircle,
-      color: 'purple'
-    }
-  ];
-
-  const recentOrders = [
-    {
-      id: 'ORD-001',
-      service: 'Google Ads Campaign',
-      status: 'In Progress',
-      date: '2024-02-15',
-      amount: '$1,500',
-      progress: 75
-    },
-    {
-      id: 'ORD-002',
-      service: 'Website Development',
-      status: 'Completed',
-      date: '2024-02-10',
-      amount: '$3,000',
-      progress: 100
-    },
-    {
-      id: 'ORD-003',
-      service: 'AI Chatbot',
-      status: 'In Progress',
-      date: '2024-02-08',
-      amount: '$2,500',
-      progress: 40
-    }
-  ];
-
+  // No demo stats or orders
+  const stats: any[] = [];
+  const recentOrders: any[] = [];
   const quickActions = [
     {
       title: 'Browse Services',
@@ -138,29 +79,11 @@ const Overview: React.FC = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <motion.div
-            key={index}
-            variants={fadeIn}
-            className="bg-white rounded-xl p-6 custom-shadow hover-lift"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">{stat.title}</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
-                <p className={`text-sm mt-1 ${
-                  stat.changeType === 'positive' ? 'text-emerald-600' : 
-                  stat.changeType === 'negative' ? 'text-red-600' : 'text-gray-600'
-                }`}>
-                  {stat.change}
-                </p>
-              </div>
-              <div className={`bg-${stat.color}-100 p-3 rounded-lg`}>
-                <stat.icon className={`h-6 w-6 text-${stat.color}-600`} />
-              </div>
-            </div>
-          </motion.div>
-        ))}
+        {stats.length === 0 && (
+          <div className="col-span-4 text-center text-gray-500 py-12">
+            No stats to display yet.
+          </div>
+        )}
       </div>
 
       {/* Recent Orders & Quick Actions */}
@@ -180,37 +103,10 @@ const Overview: React.FC = () => {
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          
           <div className="space-y-4">
-            {recentOrders.map((order, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <h4 className="font-medium text-gray-900">{order.service}</h4>
-                    <p className="text-sm text-gray-600">Order #{order.id}</p>
-                  </div>
-                  <div className="text-right">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
-                      {order.status}
-                    </span>
-                    <p className="text-sm text-gray-600 mt-1">{order.date}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-semibold text-gray-900">{order.amount}</span>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-24 bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${order.progress}%` }}
-                      />
-                    </div>
-                    <span className="text-sm text-gray-600">{order.progress}%</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {recentOrders.length === 0 && (
+              <div className="text-center text-gray-500 py-8">No orders found.</div>
+            )}
           </div>
         </motion.div>
 
@@ -220,7 +116,6 @@ const Overview: React.FC = () => {
           className="bg-white rounded-xl p-6 custom-shadow"
         >
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Quick Actions</h3>
-          
           <div className="space-y-4">
             {quickActions.map((action, index) => (
               <Link
@@ -245,27 +140,7 @@ const Overview: React.FC = () => {
       </div>
 
       {/* Performance Insights */}
-      <motion.div 
-        variants={fadeIn}
-        className="bg-gradient-to-r from-blue-50 to-emerald-50 rounded-xl p-6"
-      >
-        <div className="flex items-center space-x-4">
-          <div className="bg-blue-100 p-3 rounded-lg">
-            <TrendingUp className="h-8 w-8 text-blue-600" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900">Your Growth Summary</h3>
-            <p className="text-gray-600">
-              Your digital marketing campaigns have generated a 300% increase in leads this quarter. 
-              Keep up the great work!
-            </p>
-          </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold text-emerald-600">+300%</div>
-            <div className="text-sm text-gray-600">Lead Growth</div>
-          </div>
-        </div>
-      </motion.div>
+      {/* Removed demo growth summary */}
     </motion.div>
   );
 };
