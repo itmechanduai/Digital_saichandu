@@ -8,6 +8,18 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIU
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Database Types
+export interface User {
+  id: string
+  email: string
+  name: string
+  phone?: string
+  role: 'user' | 'admin'
+  avatar?: string
+  is_phone_verified?: boolean
+  created_at: string
+  updated_at?: string
+}
+
 export interface Customer {
   id: string
   name: string

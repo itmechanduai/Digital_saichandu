@@ -28,52 +28,7 @@ interface APIKey {
 }
 
 const APIKeys: React.FC = () => {
-  const [apiKeys, setApiKeys] = useState<APIKey[]>([
-    {
-      id: '1',
-      name: 'Website Integration',
-      key: 'sk_live_51KjH2JDGj8Nk3XcE5gH7Jk9L0pQ1Rs2Tt3Uu4Vv5Ww6Xx7Yy8Zz',
-      type: 'read',
-      status: 'active',
-      createdAt: '2024-02-15',
-      expiresAt: '2025-02-15',
-      lastUsed: '2024-02-20',
-      permissions: ['products:read', 'orders:read']
-    },
-    {
-      id: '2',
-      name: 'Mobile App',
-      key: 'sk_live_51LkI3KEHk4Ol5YdF6gI8Kl0MqR2St3Uu4Vv5Ww6Xx7Yy8Zz9Aa',
-      type: 'write',
-      status: 'active',
-      createdAt: '2024-02-10',
-      expiresAt: null,
-      lastUsed: '2024-02-19',
-      permissions: ['products:read', 'orders:read', 'orders:write']
-    },
-    {
-      id: '3',
-      name: 'Admin Dashboard',
-      key: 'sk_live_51MlJ4LFIl5Pm6ZeG7hJ9Lm1NrS3Tt4Uu5Vv6Ww7Xx8Yy9Zz0Bb',
-      type: 'admin',
-      status: 'active',
-      createdAt: '2024-02-05',
-      expiresAt: null,
-      lastUsed: '2024-02-20',
-      permissions: ['products:read', 'products:write', 'orders:read', 'orders:write', 'users:read', 'users:write']
-    },
-    {
-      id: '4',
-      name: 'Old Integration',
-      key: 'sk_live_51NmK5MGJm6Qn7AfH8iK0Mn2OsT4Uu5Vv6Ww7Xx8Yy9Zz0Aa1Bb',
-      type: 'read',
-      status: 'revoked',
-      createdAt: '2023-10-15',
-      expiresAt: '2024-01-15',
-      lastUsed: '2024-01-10',
-      permissions: ['products:read']
-    }
-  ]);
+  const [apiKeys, setApiKeys] = useState<APIKey[]>([]);
 
   const [showKeys, setShowKeys] = useState<Record<string, boolean>>({});
   const [showCreateModal, setShowCreateModal] = useState(false);

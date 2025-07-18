@@ -29,43 +29,7 @@ interface Invoice {
 }
 
 // Single initial declaration
-const initialInvoices: Invoice[] = [
-  {
-    id: 'INV-2024-001',
-    customerName: 'John Smith',
-    amount: 499.00,
-    date: '2025-07-15',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-2024-002',
-    customerName: 'Mary Jones',
-    amount: 1299.00,
-    date: '2025-07-10',
-    status: 'Unpaid',
-  },
-  {
-    id: 'INV-2024-003',
-    customerName: 'Mike Wilson',
-    amount: 799.00,
-    date: '2025-07-08',
-    status: 'Paid',
-  },
-  {
-    id: 'INV-2024-004',
-    customerName: 'Sarah Davis',
-    amount: 1599.00,
-    date: '2025-07-05',
-    status: 'Pending',
-  },
-  {
-    id: 'INV-2024-005',
-    customerName: 'David Chen',
-    amount: 899.00,
-    date: '2025-07-03',
-    status: 'Overdue',
-  }
-];
+const initialInvoices: Invoice[] = [];
 
 const InvoiceManagement: React.FC = () => {
   const [invoices, setInvoices] = useState<Invoice[]>(initialInvoices);

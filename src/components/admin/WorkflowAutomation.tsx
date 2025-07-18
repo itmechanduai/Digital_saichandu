@@ -59,62 +59,7 @@ const WorkflowAutomation: React.FC = () => {
   };
 
   // Mock data for workflows
-  const [workflows, setWorkflows] = useState<Workflow[]>([
-    {
-      id: '1',
-      name: 'Lead Nurturing Sequence',
-      description: 'Automated email sequence for new leads',
-      status: 'active',
-      type: 'email',
-      steps: [
-        { id: 's1', name: 'Welcome Email', type: 'email', config: { template: 'welcome' }, position: 1 },
-        { id: 's2', name: 'Wait 2 Days', type: 'delay', config: { days: 2 }, position: 2 },
-        { id: 's3', name: 'Follow-up Email', type: 'email', config: { template: 'follow-up' }, position: 3 },
-        { id: 's4', name: 'Check Engagement', type: 'condition', config: { condition: 'opened' }, position: 4 },
-        { id: 's5', name: 'Send Offer', type: 'email', config: { template: 'offer' }, position: 5 }
-      ],
-      triggers: ['New Lead Created', 'Form Submission'],
-      lastRun: '2024-07-20T10:30:00',
-      executions: 245,
-      successRate: 92.5,
-      createdAt: '2024-06-15T09:00:00'
-    },
-    {
-      id: '2',
-      name: 'Order Confirmation Workflow',
-      description: 'Sends confirmation emails and updates CRM when new orders are placed',
-      status: 'active',
-      type: 'integration',
-      steps: [
-        { id: 's1', name: 'Send Confirmation', type: 'email', config: { template: 'order-confirmation' }, position: 1 },
-        { id: 's2', name: 'Update CRM', type: 'crm', config: { action: 'update-status' }, position: 2 },
-        { id: 's3', name: 'Notify Team', type: 'notification', config: { channel: 'slack' }, position: 3 }
-      ],
-      triggers: ['New Order Created'],
-      lastRun: '2024-07-20T15:45:00',
-      executions: 156,
-      successRate: 98.7,
-      createdAt: '2024-06-20T14:00:00'
-    },
-    {
-      id: '3',
-      name: 'Customer Feedback Collection',
-      description: 'Automatically collects feedback after service delivery',
-      status: 'paused',
-      type: 'survey',
-      steps: [
-        { id: 's1', name: 'Wait 7 Days', type: 'delay', config: { days: 7 }, position: 1 },
-        { id: 's2', name: 'Send Survey', type: 'email', config: { template: 'feedback-survey' }, position: 2 },
-        { id: 's3', name: 'Check Response', type: 'condition', config: { condition: 'responded' }, position: 3 },
-        { id: 's4', name: 'Thank You Email', type: 'email', config: { template: 'thank-you' }, position: 4 }
-      ],
-      triggers: ['Service Marked Complete'],
-      lastRun: '2024-07-15T09:30:00',
-      executions: 89,
-      successRate: 76.4,
-      createdAt: '2024-06-25T11:30:00'
-    }
-  ]);
+  const [workflows, setWorkflows] = useState<Workflow[]>([]);
 
   const workflowTemplates = [
     {
@@ -340,7 +285,7 @@ const WorkflowAutomation: React.FC = () => {
         <div className="p-6">
           {activeTab === 'workflows' && (
             <div className="space-y-6">
-              {workflows.length === 0 ? (
+              {workflows.length === 0 && (
                 <div className="text-center py-12">
                   <Zap className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No Workflows Created</h3>
@@ -352,7 +297,8 @@ const WorkflowAutomation: React.FC = () => {
                     Create Your First Workflow
                   </button>
                 </div>
-              ) : (
+              )}
+              {workflows.length > 0 && (
                 <div className="grid gap-6">
                   {workflows.map((workflow) => {
                     const StatusIcon = getStatusIcon(workflow.status);

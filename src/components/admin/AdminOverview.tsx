@@ -81,32 +81,7 @@ const AdminOverview: React.FC = () => {
     }
   ];
 
-  const recentOrders = [
-    {
-      id: 'ORD-001',
-      customer: 'John Smith',
-      service: 'Google Ads Campaign',
-      amount: '₹1,500',
-      status: 'Processing',
-      date: '2024-02-20'
-    },
-    {
-      id: 'ORD-002',
-      customer: 'Sarah Johnson',
-      service: 'Website Development',
-      amount: '₹3,000',
-      status: 'Completed',
-      date: '2024-02-19'
-    },
-    {
-      id: 'ORD-003',
-      customer: 'Mike Wilson',
-      service: 'AI Chatbot',
-      amount: '₹2,500',
-      status: 'In Progress',
-      date: '2024-02-18'
-    }
-  ];
+  const recentOrders: any[] = [];
 
   const quickActions = [
     {
@@ -142,99 +117,19 @@ const AdminOverview: React.FC = () => {
   };
 
   // Traffic by hour data
-  const hourlyTrafficData = [
-    { hour: '00:00', visitors: 12, orders: 1 },
-    { hour: '01:00', visitors: 8, orders: 0 },
-    { hour: '02:00', visitors: 5, orders: 0 },
-    { hour: '03:00', visitors: 3, orders: 0 },
-    { hour: '04:00', visitors: 2, orders: 0 },
-    { hour: '05:00', visitors: 4, orders: 0 },
-    { hour: '06:00', visitors: 10, orders: 1 },
-    { hour: '07:00', visitors: 25, orders: 2 },
-    { hour: '08:00', visitors: 45, orders: 3 },
-    { hour: '09:00', visitors: 65, orders: 5 },
-    { hour: '10:00', visitors: 80, orders: 7 },
-    { hour: '11:00', visitors: 95, orders: 8 },
-    { hour: '12:00', visitors: 110, orders: 10 },
-    { hour: '13:00', visitors: 100, orders: 9 },
-    { hour: '14:00', visitors: 90, orders: 8 },
-    { hour: '15:00', visitors: 85, orders: 7 },
-    { hour: '16:00', visitors: 95, orders: 9 },
-    { hour: '17:00', visitors: 105, orders: 11 },
-    { hour: '18:00', visitors: 120, orders: 12 },
-    { hour: '19:00', visitors: 110, orders: 10 },
-    { hour: '20:00', visitors: 90, orders: 8 },
-    { hour: '21:00', visitors: 70, orders: 6 },
-    { hour: '22:00', visitors: 45, orders: 4 },
-    { hour: '23:00', visitors: 25, orders: 2 }
-  ];
+  const hourlyTrafficData: any[] = [];
 
   // Daily revenue data
-  const dailyRevenueData = [
-    { date: '2024-07-01', revenue: 1200 },
-    { date: '2024-07-02', revenue: 1500 },
-    { date: '2024-07-03', revenue: 1800 },
-    { date: '2024-07-04', revenue: 1600 },
-    { date: '2024-07-05', revenue: 2100 },
-    { date: '2024-07-06', revenue: 1900 },
-    { date: '2024-07-07', revenue: 1400 },
-    { date: '2024-07-08', revenue: 2200 },
-    { date: '2024-07-09', revenue: 2500 },
-    { date: '2024-07-10', revenue: 2300 },
-    { date: '2024-07-11', revenue: 2700 },
-    { date: '2024-07-12', revenue: 3000 },
-    { date: '2024-07-13', revenue: 2800 },
-    { date: '2024-07-14', revenue: 2400 },
-    { date: '2024-07-15', revenue: 3200 },
-    { date: '2024-07-16', revenue: 3500 },
-    { date: '2024-07-17', revenue: 3300 },
-    { date: '2024-07-18', revenue: 3800 },
-    { date: '2024-07-19', revenue: 4000 },
-    { date: '2024-07-20', revenue: 3700 },
-    { date: '2024-07-21', revenue: 3200 },
-    { date: '2024-07-22', revenue: 3900 },
-    { date: '2024-07-23', revenue: 4200 },
-    { date: '2024-07-24', revenue: 4500 },
-    { date: '2024-07-25', revenue: 4300 },
-    { date: '2024-07-26', revenue: 4800 },
-    { date: '2024-07-27', revenue: 5000 },
-    { date: '2024-07-28', revenue: 4700 },
-    { date: '2024-07-29', revenue: 5200 },
-    { date: '2024-07-30', revenue: 5500 }
-  ];
+  const dailyRevenueData: any[] = [];
 
   // Service category distribution
-  const serviceCategoryData = [
-    { name: 'Digital Marketing', value: 45 },
-    { name: 'AI Services', value: 30 },
-    { name: 'Web Development', value: 15 },
-    { name: 'Consulting', value: 10 }
-  ];
+  const serviceCategoryData: any[] = [];
 
   // Traffic source data
-  const trafficSourceData = [
-    { name: 'Organic Search', value: 40 },
-    { name: 'Direct', value: 25 },
-    { name: 'Social Media', value: 15 },
-    { name: 'Referral', value: 12 },
-    { name: 'Paid Search', value: 8 }
-  ];
+  const trafficSourceData: any[] = [];
 
   // User acquisition data
-  const userAcquisitionData = [
-    { month: 'Jan', users: 35 },
-    { month: 'Feb', users: 42 },
-    { month: 'Mar', users: 50 },
-    { month: 'Apr', users: 45 },
-    { month: 'May', users: 55 },
-    { month: 'Jun', users: 65 },
-    { month: 'Jul', users: 75 },
-    { month: 'Aug', users: 85 },
-    { month: 'Sep', users: 80 },
-    { month: 'Oct', users: 90 },
-    { month: 'Nov', users: 95 },
-    { month: 'Dec', users: 100 }
-  ];
+  const userAcquisitionData: any[] = [];
 
   // Colors for charts
   const COLORS = ['#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EF4444', '#EC4899'];

@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import toast from 'react-hot-toast';
+import { supabase } from '../lib/supabase';
 
 interface User {
   id: string;
@@ -19,9 +20,10 @@ interface AuthContextType {
   verifyOTP: (phone: string, otp: string) => Promise<void>;
   register: (name: string, email: string, password: string, phone?: string) => Promise<void>;
   logout: () => void;
-  updateProfile: (data: Partial<User>) => void;
+  updateProfile: (data: Partial<User>) => Promise<void>;
   isAuthenticated: boolean;
   isAdmin: boolean;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,83 +37,92 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser && savedUser !== 'undefined' && savedUser !== 'null') {
-      const parsedUser = JSON.parse(savedUser);
-      const sessionExpiry = localStorage.getItem('sessionExpiry');
-      if (!sessionExpiry || new Date(sessionExpiry) < new Date()) {
-        localStorage.removeItem('user');
-        localStorage.removeItem('sessionExpiry');
-        return null;
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Check for existing session on mount
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          await fetchUserProfile(session.user.id);
+        }
+      } catch (error) {
+        console.error('Error checking session:', error);
+      } finally {
+        setLoading(false);
       }
-      return parsedUser;
+    };
+
+    checkSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          await fetchUserProfile(session.user.id);
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const fetchUserProfile = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching user profile:', error);
+        return;
+      }
+
+      if (data) {
+        setUser(data as User);
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
     }
-    return null;
-  });
+  };
 
   const login = async (email: string, password: string) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock authentication logic
-    if (email === 'admin@digitalsaichandu.com' && password === 'admin123') {
-      const adminUser: User = {
-        id: 'admin-1',
-        name: 'Admin User',
-        email: email,
-        role: 'admin',
-        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg',
-        createdAt: new Date().toISOString()
-      };
-      setUser(adminUser);
-      localStorage.setItem('user', JSON.stringify(adminUser));
-      
-      // Set session expiry to 24 hours
-      const expiryTime = new Date();
-      expiryTime.setHours(expiryTime.getHours() + 24);
-      localStorage.setItem('sessionExpiry', expiryTime.toISOString()); 
-      
-      toast.success('Welcome back, Admin!');
-    } else if (email === 'user@example.com' && password === 'user123') {
-      const regularUser: User = {
-        id: 'user-1',
-        name: 'John Doe',
-        email: email,
-        role: 'user',
-        avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg',
-        createdAt: new Date().toISOString()
-      };
-      setUser(regularUser);
-      localStorage.setItem('user', JSON.stringify(regularUser));
-      
-      // Set session expiry to 24 hours
-      const expiryTime = new Date();
-      expiryTime.setHours(expiryTime.getHours() + 24);
-      localStorage.setItem('sessionExpiry', expiryTime.toISOString());
-      
-      toast.success('Welcome back!');
-    } else {
-      throw new Error('Invalid credentials');
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (data.user) {
+        await fetchUserProfile(data.user.id);
+        toast.success('Welcome back!');
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'Login failed');
+      throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
   const loginWithOTP = async (phone: string): Promise<string> => {
     try {
-      // Simulate API call to send OTP
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // In a real implementation, this would call your backend API to send an OTP
-      // const response = await axios.post('/api/auth/send-otp', { phone });
-      
-      // For demo purposes, we'll use a fixed OTP
-      const mockOTP = '123456';
-      
-      // In production, the OTP would be sent to the user's phone
-      // and not returned here
-      toast.success(`OTP sent to ${phone}`);
-      
-      return mockOTP; // In production, this would return a request ID or success message
+      // For now, we'll use email-based OTP since phone OTP requires additional setup
+      // In production, you'd implement proper SMS OTP
+      toast.success(`OTP functionality requires SMS service setup`);
+      return '123456'; // Mock OTP for demo
     } catch (error) {
       toast.error('Failed to send OTP');
       throw error;
@@ -120,18 +131,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const verifyOTP = async (phone: string, otp: string): Promise<void> => {
     try {
-      // Simulate API call to verify OTP
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // In a real implementation, this would call your backend API to verify the OTP
-      // const response = await axios.post('/api/auth/verify-otp', { phone, otp });
-      
-      // For demo purposes, we'll accept any 6-digit OTP
-      if (otp.length !== 6) {
+      // Mock OTP verification for demo
+      if (otp !== '123456') {
         throw new Error('Invalid OTP');
       }
-      
-      // Mock user data based on phone number
+
+      // Create a mock user for OTP login
       const mockUser: User = {
         id: `user-${Date.now()}`,
         name: 'Phone User',
@@ -144,59 +149,96 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       };
       
       setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      
-      // Set session expiry to 24 hours
-      const expiryTime = new Date();
-      expiryTime.setHours(expiryTime.getHours() + 24);
-      localStorage.setItem('sessionExpiry', expiryTime.toISOString());
-      
       toast.success('OTP verified successfully!');
-    } catch (error) {
-      toast.error('Invalid OTP. Please try again.');
+    } catch (error: any) {
+      toast.error(error.message || 'Invalid OTP');
       throw error;
     }
   };
 
   const register = async (name: string, email: string, password: string, phone?: string) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const newUser: User = {
-      id: `user-${Date.now()}`,
-      name,
-      email,
-      phone,
-      role: 'user',
-      isPhoneVerified: false,
-      avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg',
-      createdAt: new Date().toISOString()
-    };
-    
-    setUser(newUser);
-    localStorage.setItem('user', JSON.stringify(newUser));
-    
-    // Set session expiry to 24 hours
-    const expiryTime = new Date();
-    expiryTime.setHours(expiryTime.getHours() + 24);
-    localStorage.setItem('sessionExpiry', expiryTime.toISOString());
-    
-    toast.success('Account created successfully!');
+    try {
+      setLoading(true);
+      
+      // Create user in Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (authError) {
+        throw new Error(authError.message);
+      }
+
+      if (authData.user) {
+        // Create user profile in users table
+        const { error: profileError } = await supabase
+          .from('users')
+          .insert([
+            {
+              id: authData.user.id,
+              email: email,
+              name: name,
+              phone: phone,
+              role: 'user',
+              is_phone_verified: false,
+              created_at: new Date().toISOString()
+            }
+          ]);
+
+        if (profileError) {
+          console.error('Error creating user profile:', profileError);
+          // Still set the user even if profile creation fails
+        }
+
+        // Fetch the complete user profile
+        await fetchUserProfile(authData.user.id);
+        toast.success('Account created successfully!');
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'Registration failed');
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('sessionExpiry');
-    toast.success('Logged out successfully');
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+      toast.success('Logged out successfully');
+    } catch (error) {
+      console.error('Error logging out:', error);
+      toast.error('Error logging out');
+    }
   };
 
-  const updateProfile = (data: Partial<User>) => {
-    if (user) {
+  const updateProfile = async (data: Partial<User>) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('users')
+        .update({
+          name: data.name,
+          phone: data.phone,
+          avatar: data.avatar,
+          is_phone_verified: data.isPhoneVerified
+        })
+        .eq('id', user.id);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      // Update local user state
       const updatedUser = { ...user, ...data };
       setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
       toast.success('Profile updated successfully');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update profile');
+      throw error;
     }
   };
 
@@ -213,7 +255,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       logout,
       updateProfile,
       isAuthenticated,
-      isAdmin
+      isAdmin,
+      loading
     }}>
       {children}
     </AuthContext.Provider>

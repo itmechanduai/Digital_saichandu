@@ -53,63 +53,7 @@ export const DiscountProvider: React.FC<{ children: ReactNode }> = ({ children }
   const { products } = useProducts();
 
   // Sample discounts for demo
-  const sampleDiscounts: Discount[] = [
-    {
-      id: '1',
-      code: 'WELCOME20',
-      type: 'percentage',
-      value: 20,
-      minPurchase: 5000,
-      maxDiscount: 25000,
-      startDate: '2024-01-01',
-      endDate: '2025-12-31',
-      isActive: true,
-      usageLimit: 1000,
-      usageCount: 45,
-      description: 'Welcome discount for new customers',
-      createdAt: '2024-01-01'
-    },
-    {
-      id: '2',
-      code: 'SUMMER50',
-      type: 'percentage',
-      value: 50,
-      minPurchase: 25000,
-      startDate: '2024-06-01',
-      endDate: '2024-08-31',
-      isActive: true,
-      usageCount: 12,
-      applicableCategories: ['Digital Marketing Services'],
-      description: 'Summer sale on all digital marketing services',
-      createdAt: '2024-05-15'
-    },
-    {
-      id: '3',
-      code: 'FLAT100',
-      type: 'fixed',
-      value: 5000,
-      minPurchase: 15000,
-      startDate: '2024-01-01',
-      endDate: '2024-12-31',
-      isActive: true,
-      usageCount: 78,
-      description: 'Flat $100 off on purchases above $300',
-      createdAt: '2024-01-01'
-    },
-    {
-      id: '4',
-      code: 'AI25',
-      type: 'percentage',
-      value: 25,
-      startDate: '2024-01-01',
-      endDate: '2024-12-31',
-      isActive: true,
-      usageCount: 34,
-      applicableCategories: ['AI Services'],
-      description: '25% off on all AI services',
-      createdAt: '2024-01-01'
-    }
-  ];
+  const sampleDiscounts: Discount[] = [];
 
   useEffect(() => {
     // Initialize with sample discounts

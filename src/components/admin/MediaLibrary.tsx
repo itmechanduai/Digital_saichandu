@@ -37,110 +37,17 @@ interface MediaItem {
 }
 
 // Sample media items for demonstration
-const sampleMedia: MediaItem[] = [
-  {
-    id: '1',
-    name: 'product-banner.jpg',
-    type: 'image',
-    url: 'https://images.pexels.com/photos/270637/pexels-photo-270637.jpeg',
-    thumbnail: 'https://images.pexels.com/photos/270637/pexels-photo-270637.jpeg?w=150',
-    size: 1024000,
-    dimensions: '1920x1080',
-    uploadedAt: '2024-07-15',
-    tags: ['banner', 'product'],
-    folder: 'marketing'
-  },
-  {
-    id: '2',
-    name: 'team-photo.jpg',
-    type: 'image',
-    url: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg',
-    thumbnail: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?w=150',
-    size: 2048000,
-    dimensions: '2400x1600',
-    uploadedAt: '2024-07-14',
-    tags: ['team', 'about'],
-    folder: 'about'
-  },
-  {
-    id: '3',
-    name: 'service-demo.mp4',
-    type: 'video',
-    url: 'https://example.com/videos/service-demo.mp4',
-    thumbnail: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?w=150',
-    size: 15360000,
-    dimensions: '1920x1080',
-    uploadedAt: '2024-07-10',
-    tags: ['demo', 'service'],
-    folder: 'services'
-  },
-  {
-    id: '4',
-    name: 'pricing-sheet.pdf',
-    type: 'document',
-    url: 'https://example.com/documents/pricing-sheet.pdf',
-    size: 512000,
-    uploadedAt: '2024-07-08',
-    tags: ['pricing', 'sales'],
-    folder: 'documents'
-  },
-  {
-    id: '5',
-    name: 'logo-transparent.png',
-    type: 'image',
-    url: 'https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg',
-    thumbnail: 'https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?w=150',
-    size: 256000,
-    dimensions: '500x500',
-    uploadedAt: '2024-07-05',
-    tags: ['logo', 'branding'],
-    folder: 'branding'
-  },
-  {
-    id: '6',
-    name: 'case-study.pdf',
-    type: 'document',
-    url: 'https://example.com/documents/case-study.pdf',
-    size: 768000,
-    uploadedAt: '2024-07-03',
-    tags: ['case study', 'marketing'],
-    folder: 'documents'
-  },
-  {
-    id: '7',
-    name: 'product-demo.jpg',
-    type: 'image',
-    url: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg',
-    thumbnail: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?w=150',
-    size: 1536000,
-    dimensions: '2000x1333',
-    uploadedAt: '2024-07-01',
-    tags: ['product', 'demo'],
-    folder: 'products'
-  },
-  {
-    id: '8',
-    name: 'ai-chatbot-demo.mp4',
-    type: 'video',
-    url: 'https://example.com/videos/ai-chatbot-demo.mp4',
-    thumbnail: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?w=150',
-    size: 20480000,
-    dimensions: '1920x1080',
-    uploadedAt: '2024-06-28',
-    tags: ['ai', 'chatbot', 'demo'],
-    folder: 'services'
-  }
-];
+const sampleMedia: MediaItem[] = [];
 
 // Folders for organization
 const folders = [
-  { id: 'all', name: 'All Files', count: sampleMedia.length },
-  { id: 'marketing', name: 'Marketing', count: 1 },
-  { id: 'about', name: 'About', count: 1 },
-  { id: 'services', name: 'Services', count: 2 },
-  { id: 'documents', name: 'Documents', count: 2 },
-  { id: 'branding', name: 'Branding', count: 1 },
-  { id: 'products', name: 'Products', count: 1 }
+  { id: 'all', name: 'All Files', count: 0 },
+  { id: 'marketing', name: 'Marketing', count: 0 },
+  { id: 'about', name: 'About', count: 0 },
+  { id: 'services', name: 'Services', count: 0 },
+  { id: 'documents', name: 'Documents', count: 0 },
+  { id: 'branding', name: 'Branding', count: 0 },
+  { id: 'products', name: 'Products', count: 0 }
 ];
 
 const MediaLibrary: React.FC = () => {

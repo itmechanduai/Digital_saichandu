@@ -233,12 +233,12 @@ const InvoiceGenerator: React.FC = () => {
   const componentRef = useRef(null);
   const [logoUrl, setLogoUrl] = useState('/ds.logo.png');
   const [companyDetails, setCompanyDetails] = useState({
-    name: 'Digital Saichandu',
-    address: 'Hyderabad, Telangana, India',
-    email: 'info@digitalsaichandu.com',
-    phone: '+91 9390437608',
-    website: 'www.digitalsaichandu.com',
-    gst: 'GSTIN: 29AADCB2230M1ZT' // Example GST number
+    name: '',
+    address: '',
+    email: '',
+    phone: '',
+    website: '',
+    gst: ''
   });
   
   // Generate a random invoice number if not provided

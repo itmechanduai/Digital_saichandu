@@ -30,48 +30,7 @@ const OrderManagement: React.FC = () => {
     transition: { duration: 0.6 }
   };
 
-  const orders = [
-    {
-      id: 'ORD-001',
-      customer: 'John Smith',
-      email: 'john@example.com',
-      service: 'Google Ads Campaign Management',
-      amount: '$1,500',
-      status: 'Processing',
-      date: '2024-02-20',
-      paymentStatus: 'Paid'
-    },
-    {
-      id: 'ORD-002',
-      customer: 'Sarah Johnson',
-      email: 'sarah@example.com',
-      service: 'Professional Website Development',
-      amount: '$3,000',
-      status: 'Completed',
-      date: '2024-02-19',
-      paymentStatus: 'Paid'
-    },
-    {
-      id: 'ORD-003',
-      customer: 'Mike Wilson',
-      email: 'mike@example.com',
-      service: 'AI Chatbot Development',
-      amount: '$2,500',
-      status: 'In Progress',
-      date: '2024-02-18',
-      paymentStatus: 'Paid'
-    },
-    {
-      id: 'ORD-004',
-      customer: 'Emily Davis',
-      email: 'emily@example.com',
-      service: 'Meta Ads Campaign',
-      amount: '$1,200',
-      status: 'Pending',
-      date: '2024-02-17',
-      paymentStatus: 'Pending'
-    }
-  ];
+  const orders: any[] = [];
 
   const filteredOrders = orders.filter(order => {
     const matchesSearch = order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||

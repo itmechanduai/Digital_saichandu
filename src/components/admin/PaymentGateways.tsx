@@ -33,46 +33,7 @@ interface PaymentGateway {
 }
 
 const PaymentGateways: React.FC = () => {
-  const [gateways, setGateways] = useState<PaymentGateway[]>([
-    {
-      id: '1',
-      name: 'Stripe',
-      type: 'credit_card',
-      status: 'active',
-      apiKey: 'pk_test_51H...Frd',
-      secretKey: 'sk_test_51H...Qjs',
-      webhookUrl: 'https://digitalsaichandu.com/api/webhooks/stripe',
-      transactionFee: '2.9% + $0.30',
-      supportedCurrencies: ['USD', 'EUR', 'GBP', 'INR'],
-      lastUpdated: '2024-02-15',
-      testMode: false
-    },
-    {
-      id: '2',
-      name: 'Razorpay',
-      type: 'credit_card',
-      status: 'active',
-      apiKey: 'rzp_test_6X...Ypd',
-      secretKey: 'rzp_test_sec...Kls',
-      webhookUrl: 'https://digitalsaichandu.com/api/webhooks/razorpay',
-      transactionFee: '2% + ₹2',
-      supportedCurrencies: ['INR'],
-      lastUpdated: '2024-02-10',
-      testMode: false
-    },
-    {
-      id: '3',
-      name: 'PayPal',
-      type: 'digital_wallet',
-      status: 'inactive',
-      merchantId: 'merchant.id.12345',
-      webhookUrl: 'https://digitalsaichandu.com/api/webhooks/paypal',
-      transactionFee: '3.9% + $0.30',
-      supportedCurrencies: ['USD', 'EUR', 'GBP'],
-      lastUpdated: '2024-01-20',
-      testMode: true
-    }
-  ]);
+  const [gateways, setGateways] = useState<PaymentGateway[]>([]);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingGateway, setEditingGateway] = useState<PaymentGateway | null>(null);
@@ -288,6 +249,9 @@ const PaymentGateways: React.FC = () => {
         <div className="p-6">
           {activeTab === 'gateways' && (
             <div className="space-y-6">
+              {gateways.length === 0 && activeTab === 'gateways' && (
+                <div className="text-center text-gray-500 py-8">No payment gateways configured.</div>
+              )}
               {gateways.length === 0 ? (
                 <div className="text-center py-12">
                   <CreditCard className="h-16 w-16 text-gray-300 mx-auto mb-4" />

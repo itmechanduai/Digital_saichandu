@@ -49,119 +49,9 @@ interface SocialMediaPost {
 }
 
 // Mock data to prevent fetch errors
-const mockAccounts: SocialMediaAccount[] = [
-  {
-    id: '1',
-    platform: 'Facebook',
-    handle: '@digitalsaichandu',
-    followers_count: 12500,
-    engagement_rate: 4.2,
-    posts_count: 156,
-    status: 'connected',
-    last_sync: '2024-02-20T10:30:00Z'
-  },
-  {
-    id: '2',
-    platform: 'Instagram',
-    handle: '@digitalsaichandu',
-    followers_count: 8300,
-    engagement_rate: 6.8,
-    posts_count: 234,
-    status: 'connected',
-    last_sync: '2024-02-20T10:30:00Z'
-  },
-  {
-    id: '3',
-    platform: 'Twitter',
-    handle: '@digitalsaichandu',
-    followers_count: 5700,
-    engagement_rate: 3.1,
-    posts_count: 89,
-    status: 'connected',
-    last_sync: '2024-02-20T10:30:00Z'
-  },
-  {
-    id: '4',
-    platform: 'LinkedIn',
-    handle: 'Digital Saichandu',
-    followers_count: 3200,
-    engagement_rate: 5.4,
-    posts_count: 67,
-    status: 'connected',
-    last_sync: '2024-02-20T10:30:00Z'
-  },
-  {
-    id: '5',
-    platform: 'YouTube',
-    handle: 'Digital Saichandu',
-    followers_count: 2800,
-    engagement_rate: 4.7,
-    posts_count: 42,
-    status: 'connected',
-    last_sync: '2024-02-20T10:30:00Z'
-  },
-  {
-    id: '6',
-    platform: 'Pinterest',
-    handle: '@digitalsaichandu',
-    followers_count: 1500,
-    engagement_rate: 3.8,
-    posts_count: 120,
-    status: 'disconnected',
-    last_sync: '2024-02-15T10:30:00Z'
-  }
-];
+const mockAccounts: SocialMediaAccount[] = [];
 
-const mockPosts: SocialMediaPost[] = [
-  {
-    id: '1',
-    platform: 'Facebook',
-    content: '🚀 Exciting news! We just launched our new AI-powered lead generation system. See how it can transform your business growth!',
-    status: 'published',
-    engagement_stats: { likes: 45, comments: 12, shares: 8 },
-    created_at: '2024-02-20T09:00:00Z'
-  },
-  {
-    id: '2',
-    platform: 'Instagram',
-    content: '✨ Behind the scenes at Digital Saichandu! Our team working on cutting-edge digital marketing solutions. #DigitalMarketing #AI',
-    status: 'published',
-    engagement_stats: { likes: 89, comments: 23, shares: 15 },
-    created_at: '2024-02-19T14:30:00Z'
-  },
-  {
-    id: '3',
-    platform: 'Twitter',
-    content: 'Pro tip: Your Google Ads performance can improve by 300% with the right optimization strategy. Want to learn how? 🧵',
-    status: 'published',
-    engagement_stats: { likes: 67, comments: 34, shares: 28 },
-    created_at: '2024-02-18T11:15:00Z'
-  },
-  {
-    id: '4',
-    platform: 'LinkedIn',
-    content: 'The future of business automation is here. Our latest AI workflow solutions are helping companies save 20+ hours per week.',
-    status: 'scheduled',
-    engagement_stats: { likes: 0, comments: 0, shares: 0 },
-    created_at: '2024-02-21T16:00:00Z'
-  },
-  {
-    id: '5',
-    platform: 'YouTube',
-    content: 'New video: How to set up your first Google Ads campaign in 10 minutes. Perfect for beginners!',
-    status: 'published',
-    engagement_stats: { likes: 45, comments: 12, shares: 8 },
-    created_at: '2024-02-17T10:00:00Z'
-  },
-  {
-    id: '6',
-    platform: 'Pinterest',
-    content: 'Digital Marketing Checklist: 10 things every business should do before launching a campaign. #DigitalMarketing #MarketingTips',
-    status: 'scheduled',
-    engagement_stats: { likes: 0, comments: 0, shares: 0 },
-    created_at: '2024-02-22T09:00:00Z'
-  }
-];
+const mockPosts: SocialMediaPost[] = [];
 
 const SocialMediaManagement: React.FC = () => {
   const [accounts] = useState<SocialMediaAccount[]>(mockAccounts);
@@ -180,7 +70,7 @@ const SocialMediaManagement: React.FC = () => {
     totalFollowers: accounts.reduce((sum, acc) => sum + acc.followers_count, 0),
     totalEngagement: accounts.length > 0 ? 
       (accounts.reduce((sum, acc) => sum + acc.engagement_rate, 0) / accounts.length).toFixed(1) + '%' : '0%',
-    monthlyGrowth: '+12.3%',
+    monthlyGrowth: '0%',
     totalPosts: accounts.reduce((sum, acc) => sum + acc.posts_count, 0)
   };
 

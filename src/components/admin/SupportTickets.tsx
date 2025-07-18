@@ -61,125 +61,7 @@ const SupportTickets: React.FC = () => {
   };
 
   // Mock data for support tickets
-  const tickets: SupportTicket[] = [
-    {
-      id: '1',
-      ticketNumber: 'TKT-123456',
-      customerName: 'John Smith',
-      customerEmail: 'john@example.com',
-      customerPhone: '+1 (555) 123-4567',
-      subject: 'Issue with Google Ads Campaign',
-      message: 'I\'m having trouble with my Google Ads campaign. The ads are not showing up even though the campaign is active. Can you please help me troubleshoot this issue?',
-      inquiryType: 'technical',
-      status: 'new',
-      priority: 'high',
-      createdAt: '2024-02-20T10:30:00',
-      updatedAt: '2024-02-20T10:30:00',
-      assignedTo: undefined,
-      orderNumber: 'ORD-001',
-      responses: []
-    },
-    {
-      id: '2',
-      ticketNumber: 'TKT-123457',
-      customerName: 'Sarah Johnson',
-      customerEmail: 'sarah@example.com',
-      customerPhone: '+1 (555) 234-5678',
-      subject: 'Billing Question',
-      message: 'I was charged twice for my last invoice. Can you please check this and process a refund for the duplicate charge?',
-      inquiryType: 'billing',
-      status: 'in_progress',
-      priority: 'urgent',
-      createdAt: '2024-02-19T14:15:00',
-      updatedAt: '2024-02-20T09:45:00',
-      assignedTo: 'David Chen',
-      orderNumber: 'ORD-002',
-      responses: [
-        {
-          id: 'resp-1',
-          message: 'Thank you for bringing this to our attention. I\'m looking into this issue now and will get back to you shortly with more information.',
-          createdAt: '2024-02-20T09:45:00',
-          isAdmin: true
-        }
-      ]
-    },
-    {
-      id: '3',
-      ticketNumber: 'TKT-123458',
-      customerName: 'Mike Wilson',
-      customerEmail: 'mike@example.com',
-      customerPhone: '+1 (555) 345-6789',
-      subject: 'Feature Request',
-      message: 'I would like to request a new feature for the AI chatbot. It would be great if it could integrate with our CRM system.',
-      inquiryType: 'feature',
-      status: 'resolved',
-      priority: 'medium',
-      createdAt: '2024-02-18T11:20:00',
-      updatedAt: '2024-02-20T15:30:00',
-      assignedTo: 'Sarah Mitchell',
-      responses: [
-        {
-          id: 'resp-2',
-          message: 'Thank you for your feature request. We\'ve added this to our product roadmap and will consider it for a future update.',
-          createdAt: '2024-02-19T10:15:00',
-          isAdmin: true
-        },
-        {
-          id: 'resp-3',
-          message: 'Thanks for the update. Looking forward to this feature!',
-          createdAt: '2024-02-19T14:30:00',
-          isAdmin: false
-        },
-        {
-          id: 'resp-4',
-          message: 'We\'re happy to let you know that we\'ve prioritized this feature and it will be included in our next release. Thank you for your patience!',
-          createdAt: '2024-02-20T15:30:00',
-          isAdmin: true
-        }
-      ]
-    },
-    {
-      id: '4',
-      ticketNumber: 'TKT-123459',
-      customerName: 'Emily Davis',
-      customerEmail: 'emily@example.com',
-      customerPhone: '+1 (555) 456-7890',
-      subject: 'Website Development Question',
-      message: 'I\'m interested in your website development services. Can you provide more information about your process and timeline?',
-      inquiryType: 'general',
-      status: 'closed',
-      priority: 'low',
-      createdAt: '2024-02-17T09:00:00',
-      updatedAt: '2024-02-19T16:45:00',
-      assignedTo: 'David Chen',
-      responses: [
-        {
-          id: 'resp-5',
-          message: 'Thank you for your interest in our website development services. I\'d be happy to provide more information. Our typical process includes discovery, design, development, testing, and launch phases. The timeline depends on the complexity of the project, but usually ranges from 4-8 weeks.',
-          createdAt: '2024-02-18T10:30:00',
-          isAdmin: true
-        },
-        {
-          id: 'resp-6',
-          message: 'Thank you for the information. I\'d like to schedule a consultation to discuss my project in more detail.',
-          createdAt: '2024-02-18T14:15:00',
-          isAdmin: false
-        },
-        {
-          id: 'resp-7',
-          message: 'Great! I\'ve sent you a calendar invite for a consultation call tomorrow at 2 PM. Looking forward to discussing your project!',
-          createdAt: '2024-02-18T15:00:00',
-          isAdmin: true
-        },
-        {
-          id: 'resp-8',
-          message: 'Is there anything else you need assistance with?',
-          createdAt: '2024-02-19T16:45:00',
-          isAdmin: true
-        }
-      ]
-    }
-  ];
+  const tickets: SupportTicket[] = [];
 
   const filteredTickets = tickets.filter(ticket => {
     const matchesSearch = ticket.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -490,14 +372,7 @@ const SupportTickets: React.FC = () => {
       </motion.div>
 
       {filteredTickets.length === 0 && (
-        <motion.div 
-          variants={fadeIn}
-          className="text-center py-12"
-        >
-          <MessageSquare className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No tickets found</h3>
-          <p className="text-gray-600">Try adjusting your search or filter criteria</p>
-        </motion.div>
+        <div className="text-center text-gray-500 py-8">No tickets found.</div>
       )}
 
       {/* Ticket Details Modal */}

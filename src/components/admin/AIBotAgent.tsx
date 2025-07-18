@@ -110,34 +110,7 @@ const AIBotAgent: React.FC = () => {
   ];
 
   // Mock existing agents
-  const [botAgents, setBotAgents] = useState<BotAgent[]>([
-    {
-      id: '1',
-      name: 'Lead Collector Pro',
-      description: 'Advanced lead collection and qualification bot',
-      prompt: 'You are a professional lead generation assistant...',
-      tasks: ['Collect contact info', 'Qualify leads', 'Schedule calls'],
-      status: 'active',
-      responses: 1247,
-      successRate: 94.5,
-      lastActive: '2024-02-20T10:30:00',
-      category: 'Lead Generation',
-      icon: 'Target'
-    },
-    {
-      id: '2',
-      name: 'Service Advisor',
-      description: 'Helps customers choose the right services',
-      prompt: 'You are a knowledgeable product advisor...',
-      tasks: ['Explain services', 'Provide quotes', 'Compare packages'],
-      status: 'active',
-      responses: 892,
-      successRate: 91.2,
-      lastActive: '2024-02-20T14:15:00',
-      category: 'Sales Support',
-      icon: 'ShoppingBag'
-    }
-  ]);
+  const [botAgents, setBotAgents] = useState<BotAgent[]>([]);
 
   const [newAgent, setNewAgent] = useState({
     name: '',
@@ -335,6 +308,9 @@ const AIBotAgent: React.FC = () => {
         <div className="p-6">
           {activeTab === 'agents' && (
             <div className="space-y-6">
+              {botAgents.length === 0 && activeTab === 'agents' && (
+                <div className="text-center text-gray-500 py-8">No AI agents found.</div>
+              )}
               {botAgents.length === 0 ? (
                 <div className="text-center py-12">
                   <Bot className="h-16 w-16 text-gray-300 mx-auto mb-4" />
